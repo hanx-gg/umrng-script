@@ -1,7 +1,7 @@
 if game.PlaceId ~= 99248392277037 then
     return
 end
-queue_on_teleport("loadstring(game:HttpGet(\"https://raw.githubusercontent.com/lolwtfpro/booyah/refs/heads/main/untitledmelee.lua\", true))()")
+queue_on_teleport("loadstring(game:HttpGet(\"https://raw.githubusercontent.com/hanx-gg/umrng-script/refs/heads/main/untitled-melee-rng-script.lua\", true))()")
 
 local windUI = loadstring(game:HttpGet("https://github.com/Footagesus/WindUI/releases/latest/download/main.lua"))()
 local cloneref = (cloneref or clonereference or function(instance) return instance end)
