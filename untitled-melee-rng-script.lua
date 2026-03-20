@@ -53,11 +53,10 @@ window:EditOpenButton({
     Position = UDim2.new(0.1, 0, 0.6, 0)
 })
 
-Window:Tag({
+window:Tag({
     Title = "v0.1.2",
-    Icon = "github",
     Color = Color3.fromHex("#30ff6a"),
-    Radius = 0,
+    Radius = 13,
 })
 
 local settings = {
@@ -224,7 +223,7 @@ local killDelaySlider = mainSection:Slider({
     Title = "Kill Delay",
     Desc = "Delay between kill attempts (seconds)",
     Flag = "killDelaySliderElement",
-    tep = 0.01,
+    Step = 0.01,
     Value = {
         Min = 0.01,
         Default = 0.1,
