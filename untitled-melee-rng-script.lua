@@ -12,12 +12,12 @@ local httpService = cloneref(game:GetService("HttpService"))
 -- placeid 99248392277037
 
 local window = windUI:CreateWindow({
-    Title = "voidex HUB",
-    Icon = "door-open",
+    Title = "Untitled Melee RNG Script",
+    Icon = "circle-off",
     Author = "by voidexhub",
     Folder = "voidexhub",
     
-    Size = UDim2.fromOffset(580, 460),
+    Size = UDim2.fromOffset(580, 360),
     MinSize = Vector2.new(560, 350),
     MaxSize = Vector2.new(850, 560),
     Transparent = true,
@@ -30,7 +30,7 @@ local window = windUI:CreateWindow({
     
     KeySystem = { 
         Key = { "voidexhub" },
-        Note = "Input the key in the textbox below and press the button to unlock the UI, if you dont have the key join the discord server for more info",
+        Note = "Join the discord for the key and more scripts!",
         URL = "https://discord.gg/auAjb9UEWa",
         SaveKey = true
     },
@@ -53,13 +53,20 @@ window:EditOpenButton({
     Position = UDim2.new(0.1, 0, 0.6, 0)
 })
 
+Window:Tag({
+    Title = "v0.1.2",
+    Icon = "github",
+    Color = Color3.fromHex("#30ff6a"),
+    Radius = 0,
+})
 
 local settings = {
     rarities = {},
     autoSacrifice = false,
     autoSacrificeWhitelist = true,
     autoAscend = false,
-    unload = false
+    unload = false,
+    killDelay = 0.1
 }
 
 local data = {
@@ -143,7 +150,7 @@ local mainTab = window:Tab({
 
 local miscTab = window:Tab({
     Title = "misc",
-    Icon = "lucide:variable"
+    Icon = "lucide:rows-3"
 })
 
 local configTab = window:Tab({
@@ -152,7 +159,7 @@ local configTab = window:Tab({
 })
 
 local mainSection = mainTab:Section({
-    Title = "main",
+    Title = "Main - auto kill",
     Box = true,
     TextTransparency = 0.05,
     TextXAlignment = "Left",
@@ -161,7 +168,7 @@ local mainSection = mainTab:Section({
 })
 
 local sacrificeSection = mainTab:Section({
-    Title = "sacrifice",
+    Title = "Sacrifice - auto sacrifice",
     Box = true,
     TextTransparency = 0.05,
     TextXAlignment = "Left",
@@ -170,7 +177,7 @@ local sacrificeSection = mainTab:Section({
 })
 
 local ascendSection = mainTab:Section({
-    Title = "ascend",
+    Title = "Ascend",
     Box = true,
     TextTransparency = 0.05,
     TextXAlignment = "Left",
@@ -179,7 +186,7 @@ local ascendSection = mainTab:Section({
 })
 
 local gamepassSection = miscTab:Section({ 
-    Title = "gamepass",
+    Title = "Unlock Gamepasses",
     Box = true,
     TextTransparency = 0.05,
     TextXAlignment = "Left",
@@ -188,7 +195,7 @@ local gamepassSection = miscTab:Section({
 })
 
 local spoofSection = miscTab:Section({
-    Title = "spoof",
+    Title = "Spoof [Client-side]",
     Box = true,
     TextTransparency = 0.05,
     TextXAlignment = "Left",
@@ -197,7 +204,7 @@ local spoofSection = miscTab:Section({
 })
 
 local configSection = configTab:Section({
-    Title = "config",
+    Title = "Config",
     Box = true,
     TextTransparency = 0.05,
     TextXAlignment = "Left",
@@ -206,23 +213,37 @@ local configSection = configTab:Section({
 })
 
 local autoKillToggle = mainSection:Toggle({
-    Title = "auto kill",
-    Desc = "hits every mob on a period of 0.1 seconds",
+    Title = "Auto Kill",
+    Desc = "Hits every mob on a period of 0.1 seconds",
     Flag = "autoKillToggleElement",
     Type = "Checkbox",
     Callback = function(state) cheat["autoKill"](state) end
 })
 
+local killDelaySlider = mainSection:Slider({
+    Title = "Kill Delay",
+    Desc = "Delay between kill attempts (seconds)",
+    Flag = "killDelaySliderElement",
+    Value = {
+        Min = 0.01,
+        Default = 0.1,
+        Max = 1
+    },
+    Callback = function(value)
+        settings.killDelay = value
+    end
+})
+
 local autoSacrificeToggle = sacrificeSection:Toggle({
-    Title = "auto sacrifice",
-    Desc = "automatically sacrifice weapons (highest available rarity)",
+    Title = "Auto Sacrifice",
+    Desc = "Automatically sacrifice weapons (highest available rarity)",
     Flag = "autoSacrificeToggleElement",
     Type = "Checkbox",
     Callback = function(state) cheat["autoSacrifice"](state) end
 })
 
 local autoSacrificeWhitelistToggle = sacrificeSection:Toggle({
-    Title = "whitelist rarities",
+    Title = "Whitelist rarities",
     Desc = "sacrifice only selected, otherwise blacklist selected",
     Flag = "autoSacrificeWhitelistToggleElement",
     Type = "Checkbox",
@@ -231,7 +252,7 @@ local autoSacrificeWhitelistToggle = sacrificeSection:Toggle({
 })
 
 local rarityDropdown = sacrificeSection:Dropdown({
-    Title = "rarities",
+    Title = "Rarities",
     Desc = "rarities to (not) sacrifice",
     Flag = "autoSacrificeRarityDropdownElement",
     Values = (function() local values = {} for i, v in ipairs(data.oddsList) do values[#values + 1] = v[2] end return values end)(),
@@ -242,7 +263,7 @@ local rarityDropdown = sacrificeSection:Dropdown({
 })
 
 local autoAscendToggle = ascendSection:Toggle({
-    Title = "auto ascension",
+    Title = "Auto ascension",
     Desc = "automatically ascend",
     Flag = "autoAscendToggleElement",
     Type = "Checkbox",
@@ -250,26 +271,26 @@ local autoAscendToggle = ascendSection:Toggle({
     Callback = function(state) cheat["autoAscend"](state) end
 })
 
-local spoofKillCount = 6767676767676767
+local spoofKillCount = 676767
 local gamepassSpoofKillCountInput = spoofSection:Input({
-    Title = "kills",
+    Title = "Kills",
     Desc = "kill count to spoof to",
     Flag = "spoofKillCountInputElement",
-    Value = "6767676767676767",
+    Value = "676767",
     Callback = function(input) spoofKillCount = tonumber(input) end
 })
 
-local spoofAscendCount = 676767676767
+local spoofAscendCount = 676767
 local gamepassSpoofAscendCountInput = spoofSection:Input({
     Title = "ascensions",
     Desc = "ascend count to spoof to",
     Flag = "spoofAscendCountInputElement",
-    Value = "676767676767",
+    Value = "676767",
     Callback = function(input) spoofAscendCount = tonumber(input) end
 })
 
 local gamepassSpoofKillsToggle = spoofSection:Toggle({
-    Title = "spoof stats for teleport",
+    Title = "Spoof stats for teleport",
     Desc = "spoof to unlock all regions",
     Flag = "gamepassSpoofKillsToggleElement",
     Type = "Checkbox",
@@ -277,20 +298,20 @@ local gamepassSpoofKillsToggle = spoofSection:Toggle({
 })
 
 local gamepassTeleporterButton = gamepassSection:Button({
-    Title = "enable teleporter",
-    Desc = "unlocks the teleporter gamepass",
+    Title = "Unlock teleporter",
+    Desc = "Unlocks the teleporter gamepass",
     Callback = function() cheat["enableTeleporter"]() end
 })
 
 local gamepassTeleporterButton = gamepassSection:Button({
-    Title = "enable auto raid",
-    Desc = "unlocks the auto raid gamepass",
+    Title = "Unlock auto raid",
+    Desc = "Unlocks the auto raid gamepass",
     Callback = function() cheat["enableAutoRaid"]() end
 })
 
 local gamepassTeleporterButton = gamepassSection:Button({
-    Title = "enable auto roll",
-    Desc = "unlocks the auto roll gamepass",
+    Title = "Unlock auto roll",
+    Desc = "Unlocks the auto roll gamepass",
     Callback = function() cheat["enableAutoRoll"]() end
 })
 
@@ -298,20 +319,20 @@ local configManager = window.ConfigManager
 
 local configNameInputValue = ""
 local configNameInput = configSection:Input({
-    Title = "config name",
+    Title = "Config name",
     Callback = function(input) configNameInputValue = input end
 })
 
 local configCreateButton = configSection:Button({
-    Title = "create and save config",
+    Title = "Create and save config",
     Callback = function() if configNameInputValue ~= "" and configNameInputValue ~= " " then local config = configManager:CreateConfig(configNameInputValue) if config then config:Save() end end end
 })
 
 local configDropdownSelection = ""
 local configList = {}
 local configDropdown = configSection:Dropdown({
-    Title = "configs",
-    Desc = "selected config",
+    Title = "Configs",
+    Desc = "Selected config",
     Values = configList,
     Value = "",
     AllowNone = true,
@@ -321,22 +342,22 @@ local configDropdown = configSection:Dropdown({
 task.spawn(function() while not settings.unload do configList = configManager:AllConfigs() configDropdown:Refresh(configList) if not table.find(configList, configDropdownSelection) then configDropdown:Select("") end wait(5) end end)
 
 local configLoadButton = configSection:Button({
-    Title = "load config",
+    Title = "Load config",
     Callback = function() if configDropdownSelection ~= "" and configDropdownSelection ~= " " then local config = configManager:GetConfig(configDropdownSelection)  if config then config:Load() end end end
 })
 
 local configSaveButton = configSection:Button({
-    Title = "save config",
+    Title = "Save config",
     Callback = function() if configDropdownSelection ~= "" and configDropdownSelection ~= " " then local config = configManager:GetConfig(configDropdownSelection)  if config then config:Save() end end end
 })
 
 local configDeleteButton = configSection:Button({
-    Title = "delete config",
+    Title = "Delete config",
     Callback = function() if configDropdownSelection ~= "" and configDropdownSelection ~= " " then local config = configManager:GetConfig(configDropdownSelection) if config then config:Delete() end end end
 })
 
 local configSetAutoLoadButton = configSection:Button({
-    Title = "set the config to autoload",
+    Title = "Set the config to autoload",
     Callback = function()
         if configDropdownSelection ~= "" and configDropdownSelection ~= " " then
             local config = configManager:GetConfig(configDropdownSelection)
@@ -346,7 +367,7 @@ local configSetAutoLoadButton = configSection:Button({
 })
 
 local configStopAutoLoadButton = configSection:Button({
-    Title = "stop all autoloads",
+    Title = "Stop all autoloads",
     Callback = function() for i, v in pairs(configManager:GetAutoLoadConfigs()) do utils["configSetAutoload"](configManager:GetConfig(v), false) end end
 })
 
@@ -431,7 +452,7 @@ function autoKillFunc()
         currEnemies = {}
         game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("HitMob"):FireServer(args)
         args = {}
-        wait(0.1)
+        wait(settings.killDelay)
         if settings.unload then
             autoKillToggleState = true
         end
