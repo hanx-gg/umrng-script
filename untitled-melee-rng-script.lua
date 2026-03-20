@@ -50,7 +50,7 @@ window:EditOpenButton({
     Position = UDim2.new(0.1, 0, 0.6, 0)
 })
 
-Window:Tag({
+window:Tag({
     Title = "v0.1.2",
     Color = Color3.fromHex("#8a4cec"),
     Radius = 13
