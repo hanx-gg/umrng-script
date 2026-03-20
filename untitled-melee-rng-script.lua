@@ -213,7 +213,7 @@ local configSection = configTab:Section({
 
 local autoKillToggle = mainSection:Toggle({
     Title = "Auto Kill",
-    Desc = "Hits every mob on a period of 0.1 seconds",
+    Desc = "Hits every mob on a period of 0.01 - 1 seconds (set delay in slider below)",
     Flag = "autoKillToggleElement",
     Type = "Checkbox",
     Callback = function(state) cheat["autoKill"](state) end
@@ -227,7 +227,7 @@ local killDelaySlider = mainSection:Slider({
     Value = {
         Min = 0.01,
         Default = 0.1,
-        Max = 1
+        Max = 0.5
     },
     Callback = function(value)
         settings.killDelay = value
