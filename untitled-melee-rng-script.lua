@@ -39,21 +39,25 @@ local window = windUI:CreateWindow({
 
 
 window:EditOpenButton({
-    Title = "Open UI",
-    Icon = "send-to-back",
+    Title = "open UI",
+    Icon = "monitor",
     CornerRadius = UDim.new(0,16),
     StrokeThickness = 2,
-    Color = Color3.fromHex("#8a4cec"),
+    Color = ColorSequence.new( -- gradient
+        Color3.fromHex("FF0F7B"), 
+        Color3.fromHex("F89B29")
+    ),
     OnlyMobile = false,
     Enabled = true,
     Draggable = true,
     Position = UDim2.new(0.1, 0, 0.6, 0)
 })
 
-window:Tag({
+Window:Tag({
     Title = "v0.1.2",
-    Color = Color3.fromHex("#8a4cec"),
-    Radius = 13
+    Icon = "github",
+    Color = Color3.fromHex("#30ff6a"),
+    Radius = 0,
 })
 
 local settings = {
@@ -220,7 +224,7 @@ local killDelaySlider = mainSection:Slider({
     Title = "Kill Delay",
     Desc = "Delay between kill attempts (seconds)",
     Flag = "killDelaySliderElement",
-    Step = 0.01,
+    tep = 0.01,
     Value = {
         Min = 0.01,
         Default = 0.1,
