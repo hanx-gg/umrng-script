@@ -12,7 +12,7 @@ local httpService = cloneref(game:GetService("HttpService"))
 -- placeid 99248392277037
 
 local window = windUI:CreateWindow({
-    Title = "Untitled Melee RNG Script lol",
+    Title = "Untitled Melee RNG Script",
     Icon = "circle-off",
     Author = "by voidexhub",
     Folder = "voidexhub",
